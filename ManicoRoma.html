@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" class="fullscreen-100">
+<head>
+    <meta charset="utf-8">
+    <title>ManicoRoma</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="white"/>
+    <meta name="description" content="">
+
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+
+
+    <script src="https://unpkg.com/fullscreen-polyfill/dist/fullscreen.polyfill.js"></script>
+
+    <script src="https://unpkg.com/focus-visible/dist/focus-visible.js" defer></script>
+    <script src="https://unpkg.com/event-target@latest/min.js"></script>
+    <script src="https://unpkg.com/resize-observer-polyfill@1.5.0/dist/ResizeObserver.global.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
+
+    <style>
+        .color-button {
+            width: 30px;
+            height: 30px;
+            margin-top: 5px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .unselectable {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            pointer-events:none;
+        }
+
+        .color-button.selected {
+            border: 2px solid #717171;
+        }
+    </style>
+
+</head>
+<body class="fullscreen-100">
+<model-viewer id="modelViewer"
+              class='model-viewer' ar autoplay camera-controls src='models/ManicoRoma.glb'
+              ios-src='models/ManicoRoma.usdz' alt='' noloop camera-orbit="-30deg 55deg 60%"
+              min-camera-orbit="auto auto 80%" ar-modes="scene-viewer webxr quick-look"
+              camera-target="0 0 1.5cm"
+              exposure="1" shadow-intensity="1.5" shadow-softness="0.8" quick-look-browsers="safari chrome">
+    <script src="js/LoadingBar.js"></script>
+    <div class="unselectable" id="hotspot-elliptical-finger" slot="hotspot-elliptical-finger" data-position="00.09 00.12 00.12" data-normal="00.00 01.00 00.00">
+    <div class="unselectable" style="display: flex;transform: translateX(50%)">
+        <div class="hotspot-bar"></div>
+        <div class="unselectable hotspot-text text-white">ELLIPTICAL FINGER REST FOR PERFECT GRIP</div>
+    </div>
+</div>
+	<div class="unselectable" id="hotspot-squared-open-hole" slot="hotspot-squared-open-hole" data-position="-00.11 00.13 -00.14" data-normal="00.00 01.00 00.00">
+    <div class="unselectable" style="display: flex;transform: translateX(50%)">
+        <div class="hotspot-bar"></div>
+        <div class="unselectable hotspot-text text-white">SQUARED OPEN HOLE SUSTAINS THE HANDHOLD</div>
+    </div>
+</div>
+	<div class="unselectable" id="hotspot-wide-design" slot="hotspot-wide-design" data-position="00.08 00.07 00.09" data-normal="00.00 01.00 00.00">
+    <div class="unselectable" style="display: flex;transform: translateX(50%)">
+        <div class="hotspot-bar"></div>
+        <div class="unselectable hotspot-text text-white">WIDE DESIGN STAINLESS STEEL BRACKET</div>
+    </div>
+</div>
+    <div id="viewer-bottom" class="viewer-bottom">
+        <div id="colorBlack" onclick="changeColorByIndex(0)" class="clickable color-button selected" style="background-color: rgb(0,0,0);"></div>
+        <div id="colorRed" onclick="changeColorByIndex(1)" class="clickable color-button" style="background-color: rgb(255,0,7);"></div>
+        <div id="colorGrey" onclick="changeColorByIndex(2)" class="clickable color-button" style="background-color: rgb(55,55,55);"></div>
+        <div id="move_camera" onclick="rotateCamera()" class="clickable" style="background-image: url(img/Move.png);"></div>
+    </div>
+    <script>
+        const materialArray=["Manico_mat"];
+        let colors=[{colorBlack: 'rgb(0,0,0)'}, {colorRed: 'rgb(248,0,4)'}, {colorGrey: 'rgb(11,11,11)'}];
+        let bumps=[{colorBlack: 1}, {colorRed: 0}, {colorGrey: 0}];
+
+        const positions = ['-30deg 55deg 60%','-30deg 55deg 60%','-100deg 30deg 100%','40deg 85deg 50%'];
+
+        const getAnnotations=function () {
+            return [document.getElementById('hotspot-elliptical-finger'),document.getElementById('hotspot-squared-open-hole'),document.getElementById('hotspot-wide-design')].filter((elem)=>elem);
+        }
+
+        const positionToAnnotation={0:[],1:['hotspot-elliptical-finger'],2:['hotspot-squared-open-hole'],3:['hotspot-wide-design']};
+
+    </script>
+    <script src="js/ContentCustomizer.js"></script>
+</model-viewer>
+<script type="module" src="js/model-viewer/dist/uqido-model-viewer.js"></script>
+</body>
+</html>

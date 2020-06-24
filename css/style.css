@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+.hotspot-text{
+    margin-left: 8px;
+    margin-top:-4px;
+    max-width: 200px;
+    font-size: medium;
+    /*text-shadow:
+            -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;*/
+}
+
+.hotspot-bar{
+    width: 0;
+    background-color: #6ca0cf;
+}
+
+.no-ar-button{
+    --ar-button-display:none;
+}
+
+.text-white{
+    color: #f7f7f7;
+    font-family: 'Roboto', sans-serif;
+}
+
+.fullscreen {
+    background: rgb(156, 156, 156);
+    background: linear-gradient(360deg, rgba(156, 156, 156, 1) 0%, rgba(156, 156, 156, 1) 10%, rgba(244, 244, 244, 1) 100%);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+html{
+    height: 100%;
+}
+.fullscreen-100{
+    background: rgb(156, 156, 156);
+    background: linear-gradient(360deg, rgba(156, 156, 156, 1) 0%, rgba(156, 156, 156, 1) 10%, rgba(244, 244, 244, 1) 100%);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.fullscreen > div {
+    overflow-y:hidden;
+}
+
+.container{
+    margin: 0 0 0 0;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+.title{
+    font-size: 3rem;
+}
+
+.model-viewer{
+    height: 100%;
+    width: 100%;
+}
+
+.no-default-loading{
+    --progress-bar-color:#0000;
+    --progress-mask:#0000;
+    --progress-bar-height:0px;
+    --poster-color:#0000;
+}
+
+.model-viewer-w80 {
+    height: 100%;
+    width: 80%;
+    min-width: 300px;
+    flex: 1;
+}
+
+.right-description {
+    display: flex;
+    text-align: end;
+    align-content: center;
+    align-items: center;
+    width: 38em;
+    justify-content: center;
+    transform: translate(-15%);
+}
+
+.right-description:after{
+    content: '';
+    position: absolute;
+    top: -100px; right: 0; bottom: -100px; left: 0;
+    z-index: -1;
+    margin-left: -60px;
+    border-radius: inherit;
+    background: linear-gradient(360deg, rgba(156, 156, 156, 1) 0%, rgba(156, 156, 156, 1) 10%, rgba(244, 244, 244, 1) 100%);
+    filter: blur(35px);
+}
+
+.upper-left-logo {
+    background-size: 240px 48px;
+    height: 48px;
+    width: 240px;
+    background-repeat: no-repeat;
+}
+
+.uqido-logo{
+    background-image: url("../img/uqido-logo.png");
+    background-size: 207px 70px;
+    height: 70px;
+    width: 207px;
+}
+
+.uqido-logo-white{
+    background-image: url("../img/uqido-logo-white.png");
+    background-size: 207px 70px;
+    height: 70px;
+    width: 207px;
+}
+
+.call-to-action-button {
+    background-repeat: no-repeat;
+    background-size: 36px 36px;
+    background-position: 6% 50%;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+    background-color: #ff0000;
+    display: inline-block;
+    padding: 20px;
+    font-weight: 500;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .2), 0 0 4px rgba(0, 0, 0, .25);
+    z-index: 100;
+    font-size: 20px;
+}
+
+.viewer-bottom {
+    position: absolute;
+    left: 40px;
+    bottom: 40px;
+
+}
+
+.clickable {
+    z-index: 21;
+    user-select: none;
+    text-align: center;
+    width: 48px;
+    margin: auto;
+    height: 48px;
+    background-size: 48px 48px;
+    cursor: pointer;
+}
+
+.logo-bar {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    padding: 16px;
+}
+
+.text{
+    font-size: 1.2em;
+    line-height: 40px;
+}
+
+@media only screen and (max-width: 950px) {
+    .logo-bar {
+        justify-content: center;
+        transform: translate(0, -25%);
+        padding: 0;
+    }
+
+    .model-viewer-w80 {
+        padding-top: 24px;
+        height: 364px;
+        width: 100%;
+    }
+
+    .right-description {
+        background: transparent;
+        transform: translate(0);
+        width: 100%;
+        padding: 16px 16px 64px;
+        text-align: start;
+    }
+
+    .right-description:after{
+        content: '';
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        z-index: -1;
+        margin-left: -120px;
+        border-radius: inherit;
+        background: #0000;
+        filter: blur(0px);
+    }
+
+    .viewer-bottom {
+        position: absolute;
+        left: 16px;
+        bottom: 16px;
+    }
+
+    html{
+        height: auto;
+    }
+
+    .fullscreen {
+        height: auto;
+    }
+
+    .fullscreen-100{
+        height: 100%;
+    }
+}

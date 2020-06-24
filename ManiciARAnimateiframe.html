@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" class="fullscreen-100">
+<head>
+    <meta charset="utf-8">
+    <title>ManiciAR</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="white"/>
+    <meta name="description" content="">
+
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+
+
+    <script src="https://unpkg.com/fullscreen-polyfill/dist/fullscreen.polyfill.js"></script>
+
+    <script src="https://unpkg.com/focus-visible/dist/focus-visible.js" defer></script>
+    <script src="https://unpkg.com/event-target@latest/min.js"></script>
+    <script src="https://unpkg.com/resize-observer-polyfill@1.5.0/dist/ResizeObserver.global.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
+
+</head>
+<body style="height: 100%;width: 100%;margin: 0;display: flex;flex-grow: 1;flex-direction: column">
+
+<iframe id="model-iframe" style="flex-grow:1;width: 100%;border: none" src="https://uqido.github.io/termoplastic-webar/ManicoVirtus.html"></iframe>
+<div style="display: flex;flex-direction: row;padding: 16px">
+    <div id="b1" style="height: 30px;width: 30px;margin:8px;background-color: rgb(10,10,10)"></div>
+    <div id="b2" style="height: 30px;width: 30px;margin:8px;background-color: rgb(231,15,8)"></div>
+    <div id="b3" style="height: 30px;width: 30px;margin:8px;background-color: rgb(85,84,84)"></div>
+    <div id="b4" style="height: 30px;width: 30px;margin:8px;background-color: rgb(136,176,75)"></div>
+    <div id="b5" style="height: 30px;width: 30px;margin:8px;background-color: rgb(15,76,129)"></div>
+    <div id="camera" style="height: 30px;width: 30px;margin:8px;background-image: url(img/rotate.svg)"></div>
+    <div id="animate" style="height: 30px;width: 30px;margin:8px;background-image: url(img/Animate.svg);"></div>
+    <img id="AR" style="height: 30px;width: 30px" src="https://img.icons8.com/ios/96/000000/augmented-reality.png"/>
+</div>
+<script>
+    let iframe=document.getElementById("model-iframe");
+
+    let findAndConfigure=function(id,colorIndex){
+        let button=document.getElementById(id);
+        button.onclick=function () {
+            const colorMessage={action:"changeColor",data:colorIndex};
+            iframe.contentWindow.postMessage(JSON.stringify(colorMessage),"*");
+        }
+    }
+
+    let cameraPositionCount=0;
+    let colorCount=0;
+
+    const receiveMessage = function(messageAsString){
+        if(!messageAsString.data)
+            return;
+        const message = JSON.parse(messageAsString.data);
+        const action = message.action;
+        const data = message.data;
+        if(!action)
+            return;
+        if(action==="cameraPositionCount") {
+            console.log("Received:"+data+" camera positions");
+            cameraPositionCount=data;
+        }else if(action==="colorCount") {
+            console.log("Received:"+data+" colors");
+            colorCount=data;
+        }
+    }
+
+    iframe.onload=function() {
+        console.log("IframeLoaded");
+
+        window.addEventListener("message",receiveMessage);
+
+
+        const cameraCountAction = JSON.stringify({action:"getCameraPositionCount"});
+        iframe.contentWindow.postMessage(cameraCountAction,"*");
+        iframe.contentWindow.postMessage(JSON.stringify({action:"getColorCount"}),"*");
+
+
+        findAndConfigure("b1",0);
+        findAndConfigure("b2",1);
+        findAndConfigure("b3",2);
+
+
+        let cameraPositionIndex = 0;
+
+        let cameraButton=document.getElementById("camera");
+        cameraButton.onclick=function () {
+            cameraPositionIndex=(++cameraPositionIndex)%3;
+            const action={action:"changeCamera",data:cameraPositionIndex};
+            iframe.contentWindow.postMessage(JSON.stringify(action),"*");
+        };
+
+        let greenButton=document.getElementById("b4");
+        greenButton.onclick=function () {
+            const roughnessAction={action:"changeRoughness",data:0};
+            iframe.contentWindow.postMessage(JSON.stringify(roughnessAction),"*");
+            const colorByStringAction={action:"changeColor",data:'rgb(136,176,75)'};
+            iframe.contentWindow.postMessage(JSON.stringify(colorByStringAction),"*");
+        };
+
+        let blueButton=document.getElementById("b5");
+        blueButton.onclick=function () {
+            const roughnessAction={action:"changeRoughness",data:1};
+            iframe.contentWindow.postMessage(JSON.stringify(roughnessAction),"*");
+            const colorByStringAction={action:"changeColor",data:'rgb(15,76,129)'};
+            iframe.contentWindow.postMessage(JSON.stringify(colorByStringAction),"*");
+        };
+
+        let animateButton=document.getElementById("animate");
+        animateButton.onclick=function () {
+            const animateAction={action:"animate"};
+            iframe.contentWindow.postMessage(JSON.stringify(animateAction),"*");
+        };
+
+        let ArButton=document.getElementById("AR");
+        ArButton.onclick=function () {
+            console.log("Activating AR");
+            const action={action:"enableAR"};
+            iframe.contentWindow.postMessage(JSON.stringify(action),"*");
+        };
+
+        function checkForSupport() {
+
+            // check for AR support
+            const a = document.createElement('a'),
+                supportsAR = a.relList.supports('ar');
+
+            if ( !supportsAR ) {
+                // if the host device don't support AR disable the button
+                ArButton.style.display="none";
+                console.log("no AR Support")
+            }
+
+        }
+
+        checkForSupport();
+
+    };
+</script>
+</body>
+</html>
