@@ -159,32 +159,36 @@ window.addEventListener("message",receiveMessage,false);
 function receiveMessage(event) {
     if(!event.data)
         return;
-    const action = JSON.parse(event.data);
-    if(!action.action)
-        return;
-    if(action.action==="changeColor"){
-        if(typeof action.data === "number")
-            changeColorByIndex(action.data);
-        else if(typeof action.data === "string")
-            changeColorByString(action.data)
-    }else if(action.action==="changeRoughness"){
-        changeBumpStrength(action.data)
-    }else if(action.action==="changeCamera"){
-        rotateCamera(action.data);
-    }else if(action.action==="animate"){
-        modelAnimate();
-    }else if(action.action==="enableAR"){
-        modelviewer.activateAR().then(value => console.log(value))
-    }else if(action.action==="getCameraPositionCount"){
-        let win=window;
-        if(inIframe())
-            win=win.parent;
-        win.postMessage(JSON.stringify({action:"cameraPositionCount",data:cameraPositionsCount()}),"*");
-    }else if(action.action==="getColorCount"){
-        let win=window;
-        if(inIframe())
-            win=win.parent;
-        win.postMessage(JSON.stringify({action:"colorCount",data:colorsCount()}),"*");
+    try {
+        const action = JSON.parse(event.data);
+        if (!action.action)
+            return;
+        if (action.action === "changeColor") {
+            if (typeof action.data === "number")
+                changeColorByIndex(action.data);
+            else if (typeof action.data === "string")
+                changeColorByString(action.data)
+        } else if (action.action === "changeRoughness") {
+            changeBumpStrength(action.data)
+        } else if (action.action === "changeCamera") {
+            rotateCamera(action.data);
+        } else if (action.action === "animate") {
+            modelAnimate();
+        } else if (action.action === "enableAR") {
+            modelviewer.activateAR().then(value => console.log(value))
+        } else if (action.action === "getCameraPositionCount") {
+            let win = window;
+            if (inIframe())
+                win = win.parent;
+            win.postMessage(JSON.stringify({action: "cameraPositionCount", data: cameraPositionsCount()}), "*");
+        } else if (action.action === "getColorCount") {
+            let win = window;
+            if (inIframe())
+                win = win.parent;
+            win.postMessage(JSON.stringify({action: "colorCount", data: colorsCount()}), "*");
+        }
+    }catch (e) {
+        console.log(e);
     }
 }
 
