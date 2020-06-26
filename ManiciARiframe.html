@@ -46,19 +46,24 @@
     let colorCount=0;
 
     const receiveMessage = function(messageAsString){
-        if(!messageAsString.data)
+        if(!messageAsString.data || typeof messageAsString != "string")
             return;
-        const message = JSON.parse(messageAsString.data);
-        const action = message.action;
-        const data = message.data;
-        if(!action)
-            return;
-        if(action==="cameraPositionCount") {
-            console.log("Received:"+data+" camera positions");
-            cameraPositionCount=data;
-        }else if(action==="colorCount") {
-            console.log("Received:"+data+" colors");
-            colorCount=data;
+        try{
+            const message = JSON.parse(messageAsString.data);
+            const action = message.action;
+            const data = message.data;
+            if(!action)
+                return;
+            if(action==="cameraPositionCount") {
+                console.log("Received:"+data+" camera positions");
+                cameraPositionCount=data;
+            }else if(action==="colorCount") {
+                console.log("Received:"+data+" colors");
+                colorCount=data;
+            }
+        }catch (e) {
+            console.error('[Uqido-ModelViewer] Error response parsing')
+            console.error(e)
         }
     }
 

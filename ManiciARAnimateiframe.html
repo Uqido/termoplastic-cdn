@@ -47,8 +47,9 @@
     let colorCount=0;
 
     const receiveMessage = function(messageAsString){
-        if(!messageAsString.data)
+        if(!messageAsString.data || typeof messageAsString != "string")
             return;
+        try{
         const message = JSON.parse(messageAsString.data);
         const action = message.action;
         const data = message.data;
@@ -60,6 +61,10 @@
         }else if(action==="colorCount") {
             console.log("Received:"+data+" colors");
             colorCount=data;
+        }
+        }catch (e) {
+            console.error('[Uqido-ModelViewer] Error response parsing')
+            console.error(e)
         }
     }
 

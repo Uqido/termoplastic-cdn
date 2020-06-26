@@ -79,12 +79,12 @@ function initializeCustomizerOnMaterials(materialsName) {
                 if(colorArray.length===3){
                     colorArray.push(1);
                 }
-                console.log('Changing color to:', colorArray);
+                //console.log('Changing color to:', colorArray);
                 for(let mat of materials){
                     mat.pbrMetallicRoughness.setBaseColorFactor(colorArray);
                 }
             }else if(event.data.type==="change-bump"){
-                console.log('Changing bump to:', event.data.payload);
+                //console.log('Changing bump to:', event.data.payload);
                 for(let mat of materials){
                     mat.pbrMetallicRoughness.setNormalScale(event.data.payload);
                 }
@@ -129,19 +129,19 @@ function changeColorByIndex(index) {
     const color=Object.values(colors[index])[0];
     const bump=Object.values(bumps[index])[0];
 
-    console.log("color:"+color+" bump:"+bump);
+    //console.log("color:"+color+" bump:"+bump);
     changeColorAndBump(index,color,bump);
 }
 
 function rotateCamera(index) {
     let toEnable;
     if(index===undefined) {
-        console.log("moving to cameraIndex:"+cameraIndex)
+        //console.log("moving to cameraIndex:"+cameraIndex)
         cameraIndex = (++cameraIndex) % positions.length;
         toEnable = positionToAnnotation[cameraIndex];
         modelViewer.cameraOrbit = positions[cameraIndex];
     }else{
-        console.log("moving to index:"+index)
+        //console.log("moving to index:"+index)
         toEnable = positionToAnnotation[index];
         modelViewer.cameraOrbit = positions[index];
     }
