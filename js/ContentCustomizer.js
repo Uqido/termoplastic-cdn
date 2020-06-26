@@ -103,7 +103,7 @@ function inIframe () {
 
 if(inIframe()){
     document.getElementById('viewer-bottom').style.display="none";
-    modelviewer.classList.add("no-ar-button")
+    //modelviewer.classList.add("no-ar-button")
 }
 
 let annotations=getAnnotations();
